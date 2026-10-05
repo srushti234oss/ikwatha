@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iKWATH — Intelligent Ayurvedic Wellness Ecosystem</title>
+  <meta name="description" content="Future Ayurveda powered by AI, smart pods, and automated Kwatha preparation.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <script type="module" crossorigin src="/assets/index-KtZ9GcaV.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-30uAkU9R.css">
+</head>
+<body>
+  <!-- Ambient Background Particle & Shader Canvas -->
+  <canvas id="bg-canvas"></canvas>
+  
+  <!-- 3D WebGL Canvas for Hero Smart Machine -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Atmospheric Lighting Elements -->
+  <div class="ambient-light light-emerald"></div>
+  <div class="ambient-light light-amber"></div>
+  <div class="ambient-light light-top"></div>
+  <div class="botanical-grid-overlay"></div>
+
+  <!-- Main Viewport Container -->
+  <div id="app-container">
+
+    <!-- ====================================================================
+         1. LOGIN VIEW (View 1)
+         ==================================================================== -->
+    <div id="view-login" class="app-view active">
+      <header class="top-nav">
+        <div class="brand-badge">
+          <div class="brand-icon-wrapper">
+            <svg class="brand-leaf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C6.5 2 2 6.5 2 12c0 3.5 2 6.5 5 8 1.5-2.5 4-5 5-10 1 5 3.5 7.5 5 10 3-1.5 5-4.5 5-8 0-5.5-4.5-10-10-10z"/>
+              <path d="M12 10v10" stroke-linecap="round"/>
+            </svg>
+            <div class="icon-pulse"></div>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">iKWATH</span>
+            <span class="brand-subtitle">Smart. Safe. Traditional.</span>
+          </div>
+        </div>
+
+        <div class="machine-status-bar">
+          <div class="status-indicator">
+            <span class="pulse-dot green"></span>
+            <span class="status-text">MACHINE: <strong id="machine-id-tag">KWATH-A1 #8842</strong></span>
+          </div>
+          <div class="status-divider"></div>
+          <div class="mode-selector">
+            <button class="mode-btn active" data-mode="standby"><span class="mode-icon">✦</span> Standby</button>
+            <button class="mode-btn" data-mode="brewing"><span class="mode-icon">♨</span> Infusing</button>
+            <button class="mode-btn" data-mode="dispensing"><span class="mode-icon">💧</span> Dispensing</button>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button id="sound-toggle" class="utility-btn">
+            <svg class="sound-icon sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <span>Audio Zen</span>
+          </button>
+          <button id="tech-specs-toggle" class="utility-btn glass-btn">
+            <span>Hardware Specs</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <section class="hero-visual-section">
+          <div class="hud-card hud-temp float-delay-1">
+            <div class="hud-header"><span class="hud-dot"></span><span class="hud-label">PRECISION TEMP</span></div>
+            <div class="hud-value"><span id="hud-temp-val">85.4</span><small>©C</small></div>
+            <div class="hud-meta">AI Thermal Extraction</div>
+          </div>
+
+          <div class="hud-card hud-synergy float-delay-2">
+            <div class="hud-header"><span class="hud-dot amber"></span><span class="hud-label">ACTIVE SYNERGY</span></div>
+            <div class="hud-value"><span id="hud-synergy-val">96.8</span><small>%</small></div>
+            <div class="hud-meta">Bio-Alkaloid Density</div>
+          </div>
+
+          <div class="hud-card hud-pod float-delay-3">
+            <div class="hud-header"><span class="hud-dot green"></span><span class="hud-label">SMART HERBAL POD</span></div>
+            <div class="hud-value pod-name" id="hud-pod-val">Tulsi Giloy Immunity</div>
+            <div class="hud-meta">Authentic Kadha Decoction</div>
+          </div>
+
+          <div class="pod-switcher-bar">
+            <span class="switcher-label">LOAD HERBAL POD:</span>
+            <div class="pod-pills">
+              <button class="pod-pill active" data-pod="tulsi" data-color="#10b981"><span class="pod-dot" style="background:#10b981;"></span> Tulsi Giloy</button>
+              <button class="pod-pill" data-pod="ashwa" data-color="#d4af37"><span class="pod-dot" style="background:#d4af37;"></span> Ashwagandha Calm</button>
+              <button class="pod-pill" data-pod="triphala" data-color="#3eb489"><span class="pod-dot" style="background:#3eb489;"></span> Triphala Detox</button>
+              <button class="pod-pill" data-pod="brahmi" data-color="#38bdf8"><span class="pod-dot" style="background:#38bdf8;"></span> Brahmi Nootropic</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="login-section">
+          <div class="glass-login-panel">
+            <div class="panel-header">
+              <div class="panel-logo">
+                <span class="logo-title">iKWATH</span>
+                <span class="logo-badge">PRO</span>
+              </div>
+              <p class="panel-tagline">Smart. Safe. Traditional.</p>
+              <h1 class="welcome-heading">Welcome back</h1>
+              <p class="welcome-quote">“Your personalized Ayurveda journey starts here.”</p>
+            </div>
+
+            <form id="login-form" class="auth-form" autocomplete="off" onsubmit="return false;">
+              <div class="form-group">
+                <label for="user-identity" class="form-label">Email / Mobile Number</label>
+                <div class="input-wrapper">
+                  <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  <input type="text" id="user-identity" class="form-input" placeholder="Enter your email or mobile number" value="aarav.sharma@ayurwellness.in" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="user-password" class="form-label">Password</label>
+                  <a href="#forgot" class="forgot-link">Forgot password?</a>
+                </div>
+                <div class="input-wrapper">
+                  <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <input type="password" id="user-password" class="form-input" placeholder="Enter password" value="••••••••••••" required>
+                  <button type="button" id="toggle-password" class="show-password-btn"><span id="toggle-text">Show</span></button>
+                </div>
+              </div>
+
+              <button type="submit" id="btn-signin" class="btn-primary-signin">
+                <span class="btn-text">SIGN IN</span>
+                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <div class="btn-shimmer"></div>
+              </button>
+            </form>
+
+            <div class="divider"><span>OR</span></div>
+            <button type="button" id="btn-google" class="btn-google">
+              <svg class="google-icon" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <div class="panel-footer">
+              <span class="footer-text">New to iKWATH?</span>
+              <button type="button" id="btn-create-account" class="link-create">Create an account →</button>
+            </div>
+
+            <div class="guest-section">
+              <button type="button" id="btn-guest" class="btn-guest">
+                <svg class="qr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                <div class="guest-btn-content">
+                  <span class="guest-title">Continue as Guest</span>
+                  <span class="guest-subtitle">Quick QR Pairing for Machine Dispensers</span>
+                </div>
+                <span class="guest-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ====================================================================
+         2. AI WELLNESS HOME DASHBOARD (View 2)
+         ==================================================================== -->
+    <div id="view-dashboard" class="app-view">
+      <header class="dash-header">
+        <div class="dash-brand">
+          <div class="brand-icon-wrapper">
+            <svg class="brand-leaf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C6.5 2 2 6.5 2 12c0 3.5 2 6.5 5 8 1.5-2.5 4-5 5-10 1 5 3.5 7.5 5 10 3-1.5 5-4.5 5-8 0-5.5-4.5-10-10-10z"/>
+            </svg>
+            <div class="icon-pulse"></div>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">iKWATH</span>
+            <span class="brand-subtitle">Smart. Safe. Traditional.</span>
+          </div>
+        </div>
+
+        <div class="dash-header-right">
+          <button class="icon-btn" id="dash-notifications-btn" title="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-badge">2</span>
+          </button>
+
+          <div class="device-status-pill">
+            <span class="pulse-dot green"></span>
+            <span class="device-name">KWATH-A1 ONLINE</span>
+          </div>
+
+          <div class="user-profile-menu" id="user-profile-btn">
+            <div class="avatar-circle">
+              <span>AS</span>
+              <div class="prakriti-ring" title="Prakriti: Vata-Pitta"></div>
+            </div>
+            <div class="user-info-text">
+              <span class="user-name">Aarav Sharma</span>
+              <span class="user-prakriti">Prakriti: Vata-Pitta</span>
+            </div>
+            <button class="logout-mini-btn" id="btn-logout" title="Switch to Login Page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="dash-body">
+        <section class="dash-hero-grid">
+          <div class="dash-hero-content">
+            <div class="welcome-badge">AYURVEDIC ECOSYSTEM</div>
+            <h1 class="dash-greeting">Good morning, Aarav 🌿</h1>
+            <p class="dash-greeting-sub">What would you like to prepare today?</p>
+            
+            <div class="hero-cta-group">
+              <button id="btn-prepare-kwatha" class="btn-primary-signin cta-large">
+                <span class="btn-icon">⚡</span>
+                <span class="btn-text">+ Prepare Kwatha</span>
+                <div class="btn-shimmer"></div>
+              </button>
+
+              <button id="btn-scan-ikwath-hero" class="btn-secondary-glass">
+                <svg class="qr-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                <span>Scan iKWATH</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-telemetry-panel glass-card">
+            <div class="telemetry-item">
+              <span class="telemetry-label">DEVICE STATUS</span>
+              <span class="telemetry-value status-online">● ONLINE</span>
+            </div>
+            <div class="telemetry-divider"></div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">TEMPERATURE</span>
+              <span class="telemetry-value">Ready (85°C)</span>
+            </div>
+            <div class="telemetry-divider"></div>
+            <div class="telemetry-item">
+              <span class="telemetry-label">HERBAL POD</span>
+              <span class="telemetry-value pod-status" id="dash-pod-status">Tulsi Giloy Immunity</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="ai-wellness-section glass-card">
+          <div class="ai-header">
+            <div class="ai-title-wrap">
+              <div class="ai-sparkle-icon">🧠</div>
+              <div>
+                <h2 class="ai-heading">AI Wellness Guide</h2>
+                <p class="ai-sub">Tell iKWATH how you feel.</p>
+              </div>
+            </div>
+            <div class="ai-model-tag">Prakriti Engine v4.2</div>
+          </div>
+
+          <div class="ai-input-container">
+            <div class="ai-input-wrapper">
+              <input type="text" id="ai-prompt-input" class="ai-glass-input" placeholder="What are you looking for today? (e.g. I feel fatigued, need focus)...">
+              <canvas id="ai-waveform-canvas" width="120" height="36"></canvas>
+
+              <button type="button" id="btn-voice-ai" class="voice-mic-btn" title="Voice Assist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" y1="19" x2="12" y2="23"/>
+                </svg>
+              </button>
+
+              <button type="button" id="btn-ask-ai" class="btn-ask-ai">
+                <span>Ask iKWATH</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="ai-suggestion-chips">
+            <span class="chips-label">SUGGESTIONS:</span>
+            <button class="chip-btn" data-query="Immunity & Cold Shield">🌿 Immunity</button>
+            <button class="chip-btn" data-query="Agni Digestive Booster">🔥 Digestion</button>
+            <button class="chip-btn" data-query="Stress Relief & Calm">✨ Relaxation</button>
+            <button class="chip-btn" data-query="Pranayama Respiratory Support">🫁 Respiratory Support</button>
+            <button class="chip-btn" data-query="Daily Tridosha Balance">⚡ Daily Wellness</button>
+          </div>
+        </section>
+
+        <section class="recommended-section">
+          <div class="section-header">
+            <h2 class="section-title">Recommended for You</h2>
+            <span class="section-tag">AI Personalized • Vata-Pitta Formula</span>
+          </div>
+
+          <div class="recipes-grid">
+            <div class="recipe-card-3d glass-card">
+              <div class="recipe-badge green">IMMUNITY SUPPORT</div>
+              <div class="recipe-visual tulsi-bg"><span class="botanical-3d-icon">🌿</span></div>
+              <h3 class="recipe-name">Tulsi Giloy Immunity</h3>
+              <p class="recipe-ingredients">Tulsi • Ginger • Black Pepper</p>
+              <div class="recipe-meta">
+                <span class="meta-item">⏱ 8 Mins</span>
+                <span class="meta-item">🌡 85°C</span>
+              </div>
+              <button class="btn-prepare-recipe" data-recipe="Tulsi Giloy Immunity" data-temp="85" data-color="#10b981"><span>Prepare</span></button>
+            </div>
+
+            <div class="recipe-card-3d glass-card">
+              <div class="recipe-badge amber">DIGESTIVE SUPPORT</div>
+              <div class="recipe-visual ginger-bg"><span class="botanical-3d-icon">🫚</span></div>
+              <h3 class="recipe-name">Shunthi Agni Brew</h3>
+              <p class="recipe-ingredients">Ginger • Cumin • Fennel</p>
+              <div class="recipe-meta">
+                <span class="meta-item">⏱ 10 Mins</span>
+                <span class="meta-item">🌡 90°C</span>
+              </div>
+              <button class="btn-prepare-recipe" data-recipe="Shunthi Agni Brew" data-temp="90" data-color="#d4af37"><span>Prepare</span></button>
+            </div>
+
+            <div class="recipe-card-3d glass-card">
+              <div class="recipe-badge blue">CALM & RELAX</div>
+              <div class="recipe-visual ashwa-bg"><span class="botanical-3d-icon">✨</span></div>
+              <h3 class="recipe-name">Ashwagandha Nidra</h3>
+              <p class="recipe-ingredients">Ashwagandha • Tulsi • Cardamom</p>
+              <div class="recipe-meta">
+                <span class="meta-item">⏱ 12 Mins</span>
+                <span class="meta-item">🌡 80°C</span>
+              </div>
+              <button class="btn-prepare-recipe" data-recipe="Ashwagandha Nidra" data-temp="80" data-color="#38bdf8"><span>Prepare</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="activity-insight-grid">
+          <div class="recent-activity-panel glass-card">
+            <h3 class="panel-heading">Your Recent Preparations</h3>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon green">✓</div>
+                <div class="activity-details">
+                  <strong>Immunity Kwath</strong>
+                  <span>Today • 08:30 AM • 150ml</span>
+                </div>
+                <span class="activity-status">Completed</span>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon green">✓</div>
+                <div class="activity-details">
+                  <strong>Digestive Kwath</strong>
+                  <span>Yesterday • 01:15 PM • 200ml</span>
+                </div>
+                <span class="activity-status">Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wellness-insight-panel glass-card">
+            <div class="insight-header">
+              <span class="insight-icon">💡</span>
+              <h3 class="panel-heading">Your Wellness Insight</h3>
+            </div>
+            <p class="insight-text">“You have maintained a consistent morning preparation routine this week. Tridosha balance index improved by +14%.”</p>
+            
+            <div class="streak-chart">
+              <span class="streak-label">7-DAY ROUTINE STREAK</span>
+              <div class="streak-bars">
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 70%;"></div><span>Mon</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 85%;"></div><span>Tue</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 90%;"></div><span>Wed</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 60%;"></div><span>Thu</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 95%;"></div><span>Fri</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active" style="height: 100%;"></div><span>Sat</span></div>
+                <div class="streak-bar-wrap"><div class="streak-bar active glow-today" style="height: 88%;"></div><span>Sun</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <nav class="bottom-floating-nav">
+        <button class="nav-item active" data-tab="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-item" data-tab="discover">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+          <span>Discover</span>
+        </button>
+
+        <button class="nav-item nav-scan-hero" id="btn-floating-scan" title="Scan iKWATH Machine QR">
+          <div class="scan-ring-pulse"></div>
+          <div class="scan-inner-circle">
+            <svg class="scan-qr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </div>
+          <span class="scan-nav-label">Scan</span>
+        </button>
+
+        <button class="nav-item" data-tab="history">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>History</span>
+        </button>
+
+        <button class="nav-item" data-tab="profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- ====================================================================
+         3. SMART MACHINE SCANNER VIEW (View 3)
+         ==================================================================== -->
+    <div id="view-scanner" class="app-view">
+      <header class="scanner-header">
+        <button id="btn-scanner-back" class="nav-back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="scanner-header-title">
+          <h2>Scan iKWATH</h2>
+          <p>Identify and verify an iKWATH machine</p>
+        </div>
+
+        <button id="btn-sim-scan" class="utility-btn glass-btn">
+          <span>Simulate Scan</span>
+        </button>
+      </header>
+
+      <div class="scanner-chamber">
+        <div class="scanner-target-box" id="scanner-frame">
+          <div class="scanner-corner top-left"></div>
+          <div class="scanner-corner top-right"></div>
+          <div class="scanner-corner bottom-left"></div>
+          <div class="scanner-corner bottom-right"></div>
+          <div class="scanner-laser-beam" id="scanner-laser"></div>
+
+          <div class="machine-qr-label">
+            <div class="qr-svg-wrapper">
+              <svg viewBox="0 0 100 100" fill="currentColor">
+                <path d="M0 0h35v35H0zM10 10h15v15H10zM65 0h35v35H65zM75 10h15v15H75zM0 65h35v35H0zM10 75h15v15H10zM45 10h10v20H45zM45 45h40v10H45zM65 65h20v20H65zM45 75h10v20H45z"/>
+              </svg>
+            </div>
+            <div class="qr-device-tag">
+              <span class="qr-brand-mini">iKWATH HARDWARE</span>
+              <span class="qr-serial-code">IKW-24A8-7392</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="scanner-guide-text">Align the QR code inside the frame</p>
+        
+        <div class="scanner-live-status" id="scanner-status">
+          <span class="pulse-dot green"></span>
+          <span id="scanner-status-msg">Searching for iKWATH device...</span>
+        </div>
+
+        <div class="manual-scan-actions">
+          <span class="manual-label">Can’t scan?</span>
+          <div class="manual-btn-row">
+            <button id="btn-manual-id" class="manual-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Enter Device ID manually</span>
+            </button>
+
+            <button id="btn-upload-qr" class="manual-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Upload QR Image</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="scanner-info-card glass-card">
+          <div class="info-card-header">
+            <svg class="info-shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <strong>Why scan?</strong>
+          </div>
+          <p>Every iKWATH machine has a unique digital identity. Scan to verify the device and view its information without exposing private owner data.</p>
+        </div>
+
+        <div class="scan-success-overlay glass-modal" id="scan-success-card">
+          <div class="success-ring-pulse">✓</div>
+          <div class="success-header">
+            <span class="verified-badge">● VERIFIED DEVICE</span>
+            <h2>DEVICE IDENTIFIED</h2>
+          </div>
+
+          <div class="verified-device-info">
+            <div class="device-info-row">
+              <span class="info-label">MODEL</span>
+              <span class="info-val">iKWATH PRO</span>
+            </div>
+            <div class="device-info-row">
+              <span class="info-label">DEVICE ID</span>
+              <span class="info-val gold">IKW-24A8-7392</span>
+            </div>
+            <div class="device-info-row">
+              <span class="info-label">STATUS</span>
+              <span class="info-val green">● ONLINE • AYUSH CERTIFIED</span>
+            </div>
+          </div>
+
+          <div class="success-actions">
+            <button id="btn-view-machine" class="btn-primary-signin">
+              <span>VIEW MACHINE DIGITAL TWIN</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+
+            <button id="btn-scan-again" class="btn-secondary-glass width-full">
+              <span>Scan Again</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         4. MACHINE DIGITAL TWIN VIEW (View 4)
+         ==================================================================== -->
+    <div id="view-twin" class="app-view">
+      <header class="twin-header">
+        <button id="btn-twin-back" class="nav-back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="twin-header-title">
+          <h2>Machine Digital Twin</h2>
+          <div class="verified-sub-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>✓ VERIFIED iKWATH DEVICE</span>
+          </div>
+        </div>
+
+        <button id="btn-twin-more" class="icon-btn" title="Machine Options">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="1"/>
+            <circle cx="19" cy="12" r="1"/>
+            <circle cx="5" cy="12" r="1"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="twin-body">
+        <section class="twin-hero-card">
+          <div class="twin-device-heading">
+            <div class="twin-model-title">
+              <h1>iKWATH PRO</h1>
+              <span class="twin-status-pill-badge green" id="twin-status-badge">● ONLINE</span>
+            </div>
+            <div class="twin-id-code">Device ID: <strong>IKW-24A8-7392</strong></div>
+          </div>
+
+          <div class="authentic-glass-badge">
+            <span class="badge-icon-check">✓</span>
+            <div class="badge-text-group">
+              <strong>Authentic Device</strong>
+              <span>“Device successfully verified”</span>
+            </div>
+          </div>
+
+          <div class="twin-floor-glow"></div>
+        </section>
+
+        <section class="twin-state-switcher-bar">
+          <span class="state-switcher-label">TEST HARDWARE STATE:</span>
+          <div class="state-pills">
+            <button class="state-pill active green" data-state="ready"><span class="state-dot green"></span> 🟢 READY</button>
+            <button class="state-pill amber" data-state="preparing"><span class="state-dot amber"></span> 🟡 PREPARING</button>
+            <button class="state-pill red" data-state="attention"><span class="state-dot red"></span> 🔴 ATTENTION</button>
+            <button class="state-pill slate" data-state="offline"><span class="state-dot slate"></span> ⚫ OFFLINE</button>
+          </div>
+        </section>
+
+        <section class="twin-status-section glass-card">
+          <div class="card-section-title">
+            <h3>Live Telemetry Status</h3>
+            <span class="realtime-tag">Real-Time Sync • 60Hz</span>
+          </div>
+
+          <div class="twin-telemetry-grid">
+            <div class="telemetry-module-box">
+              <span class="module-label">TEMPERATURE</span>
+              <div class="module-val-group">
+                <span class="module-val" id="twin-temp-val">72°C</span>
+                <span class="module-sub green" id="twin-temp-sub">Optimal</span>
+              </div>
+              <div class="meter-bar-wrap">
+                <div class="meter-bar-fill green" id="meter-temp-fill" style="width: 72%;"></div>
+              </div>
+            </div>
+
+            <div class="telemetry-module-box">
+              <span class="module-label">WATER LEVEL</span>
+              <div class="module-val-group">
+                <span class="module-val" id="twin-water-val">84%</span>
+                <span class="module-sub green" id="twin-water-sub">Available</span>
+              </div>
+              <div class="meter-bar-wrap">
+                <div class="meter-bar-fill green" id="meter-water-fill" style="width: 84%;"></div>
+              </div>
+            </div>
+
+            <div class="telemetry-module-box">
+              <span class="module-label">SMART HERBAL POD</span>
+              <div class="module-val-group">
+                <span class="module-val pod-detected" id="twin-pod-val">Immunity</span>
+                <span class="module-sub gold">Detected</span>
+              </div>
+              <div class="meter-bar-wrap">
+                <div class="meter-bar-fill gold" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <div class="telemetry-module-box">
+              <span class="module-label">PROCESS STATE</span>
+              <div class="module-val-group">
+                <span class="module-val" id="twin-process-val">Ready</span>
+                <span class="module-sub green" id="twin-process-sub">Idle</span>
+              </div>
+              <div class="meter-bar-wrap">
+                <div class="meter-bar-fill green" id="meter-process-fill" style="width: 25%;"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="twin-health-section glass-card">
+          <div class="card-section-title">
+            <h3>Machine Health</h3>
+            <span class="health-overall-badge green" id="twin-health-badge">Overall Status: Excellent ✓</span>
+          </div>
+
+          <div class="health-diagnostics-grid">
+            <div class="health-item">
+              <span class="health-icon green">✓</span>
+              <div class="health-info">
+                <strong>Hardware</strong>
+                <span>Normal Operating Condition</span>
+              </div>
+            </div>
+
+            <div class="health-item">
+              <span class="health-icon green">✓</span>
+              <div class="health-info">
+                <strong>Sensors</strong>
+                <span>Optical & Turbidity Calibrated</span>
+              </div>
+            </div>
+
+            <div class="health-item">
+              <span class="health-icon green">✓</span>
+              <div class="health-info">
+                <strong>Connectivity</strong>
+                <span>5G IoT / Bluetooth Connected</span>
+              </div>
+            </div>
+
+            <div class="health-item">
+              <span class="health-icon green">✓</span>
+              <div class="health-info">
+                <strong>Maintenance</strong>
+                <span>Self-Cleaning Up To Date</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="twin-public-info-card glass-card">
+          <div class="card-section-title">
+            <h3>Public Machine Information</h3>
+            <span class="privacy-safe-tag">🔒 Public Identity • Safe Data</span>
+          </div>
+
+          <div class="public-specs-grid">
+            <div class="spec-row"><span class="spec-lbl">Model:</span><span class="spec-val">iKWATH Pro Smart Extractor</span></div>
+            <div class="spec-row"><span class="spec-lbl">Device ID:</span><span class="spec-val monospace">IKW-24A8-7392</span></div>
+            <div class="spec-row"><span class="spec-lbl">Firmware:</span><span class="spec-val">v2.4.1 (AYUSH Protocol)</span></div>
+            <div class="spec-row"><span class="spec-lbl">Manufactured:</span><span class="spec-val">August 2026</span></div>
+            <div class="spec-row"><span class="spec-lbl">Last Service:</span><span class="spec-val">28 August 2026</span></div>
+            <div class="spec-row"><span class="spec-lbl">Supported Pods:</span><span class="spec-val">Standard iKWATH Pods</span></div>
+          </div>
+        </section>
+
+        <section class="twin-actions-footer">
+          <button id="btn-twin-scan-pod" class="btn-primary-signin cta-large width-full">
+            <span class="btn-text">[ Scan Pod ]</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            <div class="btn-shimmer"></div>
+          </button>
+
+          <div class="twin-secondary-actions-row">
+            <button id="btn-twin-details" class="btn-secondary-glass flex-1">
+              <span>View Specs</span>
+            </button>
+
+            <button id="btn-twin-connect" class="btn-secondary-glass flex-1 green-border">
+              <span class="lock-icon">🔒</span>
+              <span>Connect to My Machine</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         5. SMART POD SCANNER VIEW (View 5)
+         ==================================================================== -->
+    <div id="view-pod-scanner" class="app-view">
+      <header class="pod-scanner-header">
+        <button id="btn-pod-scanner-back" class="nav-back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="scanner-header-title">
+          <h2>Scan Smart Pod</h2>
+          <p>Identify your Ayurvedic formulation</p>
+        </div>
+
+        <button id="btn-sim-pod-scan" class="utility-btn glass-btn">
+          <span>Simulate Pod Scan</span>
+        </button>
+      </header>
+
+      <div class="connected-hardware-bar">
+        <div class="hardware-left">
+          <span class="pulse-dot green"></span>
+          <span class="hw-text">✓ <strong>iKWATH PRO CONNECTED</strong></span>
+        </div>
+        <div class="hardware-right">
+          <span class="hw-id">IKW-24A8-7392</span>
+          <span class="hw-ready-badge">● READY</span>
+        </div>
+      </div>
+
+      <div class="pod-scanner-chamber">
+        <div class="pod-scanner-target-box" id="pod-scanner-frame">
+          <div class="scanner-corner top-left"></div>
+          <div class="scanner-corner top-right"></div>
+          <div class="scanner-corner bottom-left"></div>
+          <div class="scanner-corner bottom-right"></div>
+          
+          <div class="pod-laser-beam" id="pod-laser"></div>
+
+          <div class="smart-pod-graphic">
+            <div class="pod-chassis">
+              <div class="pod-nfc-ring"></div>
+              <div class="pod-window">
+                <span class="pod-liquid-glow"></span>
+              </div>
+              <div class="pod-qr-sticker">
+                <svg viewBox="0 0 100 100" fill="currentColor">
+                  <path d="M0 0h35v35H0zM10 10h15v15H10zM65 0h35v35H65zM75 10h15v15H75zM0 65h35v35H0zM10 75h15v15H10zM45 10h10v20H45zM45 45h40v10H45zM65 65h20v20H65zM45 75h10v20H45z"/>
+                </svg>
+              </div>
+            </div>
+            <span class="pod-serial-label">POD-IM-240829</span>
+          </div>
+
+          <div class="holographic-data-tag tag-1 float-delay-1">🌿 Tulsi (Ocimum sanctum)</div>
+          <div class="holographic-data-tag tag-2 float-delay-2">🫚 Sunthi (Ginger Extract)</div>
+          <div class="holographic-data-tag tag-3 float-delay-3">🌶️ Maricha (Piper nigrum)</div>
+        </div>
+
+        <p class="scanner-guide-text">Align the pod QR code inside the frame</p>
+        
+        <div class="scanner-live-status" id="pod-scan-status">
+          <span class="pulse-dot green"></span>
+          <span id="pod-status-msg">● Scanning Smart Pod...</span>
+        </div>
+
+        <div class="manual-scan-actions">
+          <span class="manual-label">Can’t scan the pod?</span>
+          <div class="manual-btn-row">
+            <button id="btn-manual-pod-id" class="manual-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Enter Pod ID</span>
+            </button>
+
+            <button id="btn-upload-pod-qr" class="manual-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Upload QR Image</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="scan-success-overlay glass-modal pod-success-card" id="pod-success-card">
+          <div class="success-ring-pulse">✓</div>
+          
+          <div class="success-header">
+            <span class="verified-badge">● AUTHENTIC SMART POD</span>
+            <h2>✓ POD VERIFIED</h2>
+            <h1 class="pod-recipe-headline">IMMUNITY SUPPORT</h1>
+            <div class="pod-id-sub">Smart Pod ID: <strong>POD-IM-240829</strong></div>
+          </div>
+
+          <div class="pod-info-card glass-card">
+            <div class="pod-info-grid">
+              <div class="pod-info-row"><span class="info-lbl">Formulation:</span><span class="info-val">Immunity Support Kwatha</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Key Ingredients:</span><span class="info-val green">Tulsi • Ginger • Black Pepper</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Batch Number:</span><span class="info-val monospace">IM-2026-0829</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Manufacturing Date:</span><span class="info-val">29 Aug 2026</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Expiry Date:</span><span class="info-val">29 Aug 2027</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Quantity:</span><span class="info-val">1 Preparation (150ml)</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Authenticity:</span><span class="info-val green">✓ Verified</span></div>
+              <div class="pod-info-row"><span class="info-lbl">Compatibility:</span><span class="info-val green">✓ Compatible with iKWATH Pro</span></div>
+            </div>
+            
+            <p class="ayur-disclaimer">*Standardized traditional Ayurvedic decoction formulation intended for immunity wellness.</p>
+          </div>
+
+          <div class="pod-compatibility-checklist">
+            <div class="check-item"><span class="check-dot">✓</span><span>POD AUTHENTICITY</span></div>
+            <div class="check-item"><span class="check-dot">✓</span><span>FORMULATION VERIFIED</span></div>
+            <div class="check-item"><span class="check-dot">✓</span><span>MACHINE COMPATIBILITY</span></div>
+            <div class="check-item"><span class="check-dot">✓</span><span>BATCH VALIDATION</span></div>
+          </div>
+
+          <p class="pod-ready-text">“Pod ready for preparation.”</p>
+
+          <div class="success-actions">
+            <button id="btn-continue-prep" class="btn-primary-signin cta-large width-full">
+              <span>Continue to Preparation</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <div class="btn-shimmer"></div>
+            </button>
+
+            <button id="btn-scan-another-pod" class="btn-secondary-glass width-full">
+              <span>Scan Another Pod</span>
+            </button>
+
+            <div class="ai-recommend-link-row">
+              <span>Not sure what to prepare?</span>
+              <button id="link-pod-ask-ai" class="link-create">Ask iKWATH AI →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         6. AI RECIPE RECOMMENDATION VIEW (View 6)
+         ==================================================================== -->
+    <div id="view-ai-recommend" class="app-view">
+      
+      <!-- Header -->
+      <header class="ai-rec-header">
+        <button id="btn-ai-rec-back" class="nav-back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="scanner-header-title">
+          <h2>AI Wellness Guide</h2>
+          <p>Your personalized Ayurvedic recommendation</p>
+        </div>
+
+        <div class="ai-engine-tag">
+          <span>🧠 Prakriti AI v4.2</span>
+        </div>
+      </header>
+
+      <!-- Top Connected Hardware & Pod Bar -->
+      <div class="connected-hardware-bar glass-card">
+        <div class="hardware-left">
+          <span class="pulse-dot green"></span>
+          <span class="hw-text">✓ <strong>iKWATH PRO CONNECTED</strong></span>
+        </div>
+        <div class="hardware-right">
+          <span class="hw-id">Device: IKW-24A8-7392</span>
+          <span class="hw-pod-tag">Pod: Immunity Support</span>
+          <span class="hw-ready-badge">● READY</span>
+        </div>
+      </div>
+
+      <!-- Main AI Layout Content Container -->
+      <div class="ai-rec-body">
+        
+        <!-- Left / Upper AI Query Glass Panel -->
+        <section class="ai-query-panel glass-card">
+          <h2 class="query-heading">“What are you looking for today?”</h2>
+          
+          <div class="conversational-input-box">
+            <div class="conversational-input-row">
+              <input type="text" id="ai-rec-prompt-input" class="ai-glass-input" value="I want something for my daily wellness..." placeholder="Describe how you feel or your wellness goal...">
+              <button type="button" id="btn-ai-rec-voice" class="voice-mic-btn" title="Voice Input">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Wellness Choice Pills -->
+          <div class="wellness-choice-pills">
+            <button class="choice-pill active" data-goal="immunity">🌿 Immunity</button>
+            <button class="choice-pill" data-goal="digestion">🔥 Digestion</button>
+            <button class="choice-pill" data-goal="relaxation">✨ Relaxation</button>
+            <button class="choice-pill" data-goal="respiratory">🫁 Respiratory Support</button>
+            <button class="choice-pill" data-goal="daily">⚡ Daily Wellness</button>
+          </div>
+        </section>
+
+        <!-- AI Response & Recommendation Card -->
+        <section class="ai-rec-response-section glass-card">
+          
+          <div class="ai-response-typing-header">
+            <span class="typing-sparkle">✦</span>
+            <p id="ai-typing-text">Based on your selected wellness goal and the available verified formulation, iKWATH recommends:</p>
+          </div>
+
+          <div class="ai-recommended-hero">
+            <div class="hero-recipe-text">
+              <span class="rec-category-badge green">AYURVEDIC DECOCTION</span>
+              <h1 class="rec-headline" id="rec-headline-title">IMMUNITY SUPPORT KWATHA</h1>
+              <p class="rec-subtitle" id="rec-subtitle-desc">Standardized traditional decoction for daily immunity support.</p>
+            </div>
+
+            <!-- Floating 3D Ingredient Badges -->
+            <div class="ingredient-badges-cluster">
+              <div class="ing-badge"><span>🌿</span> Tulsi</div>
+              <div class="ing-badge"><span>🫚</span> Ginger</div>
+              <div class="ing-badge"><span>⚫</span> Black Pepper</div>
+            </div>
+          </div>
+
+          <!-- Translucent Recommendation Card Grid -->
+          <div class="recommendation-specs-card">
+            <div class="spec-grid-item">
+              <span class="spec-label">Formulation</span>
+              <strong class="spec-value" id="rec-formulation-val">Immunity Support Kwatha</strong>
+            </div>
+
+            <div class="spec-grid-item">
+              <span class="spec-label">Purpose</span>
+              <strong class="spec-value" id="rec-purpose-val">General wellness support</strong>
+            </div>
+
+            <div class="spec-grid-item">
+              <span class="spec-label">Ingredients</span>
+              <strong class="spec-value green" id="rec-ingredients-val">Tulsi • Ginger • Black Pepper</strong>
+            </div>
+
+            <div class="spec-grid-item">
+              <span class="spec-label">Preparation Time</span>
+              <strong class="spec-value gold" id="rec-time-val">~8 Minutes</strong>
+            </div>
+
+            <div class="spec-grid-item">
+              <span class="spec-label">Serving</span>
+              <strong class="spec-value">1 preparation (150ml)</strong>
+            </div>
+
+            <div class="spec-grid-item">
+              <span class="spec-label">Smart Pod</span>
+              <strong class="spec-value monospace gold">POD-IM-240829</strong>
+            </div>
+
+            <div class="spec-grid-item width-2col">
+              <span class="spec-label">Verification Checks</span>
+              <strong class="spec-value green">✓ Authentic • ✓ Compatible • ✓ Batch Verified</strong>
+            </div>
+          </div>
+
+          <!-- Expandable AI Explanation -->
+          <details class="ai-explain-details" open>
+            <summary class="explain-summary">
+              <span class="explain-icon">💡</span>
+              <strong>Why this recommendation?</strong>
+              <span class="expand-arrow">▼</span>
+            </summary>
+            <p class="explain-content" id="rec-explanation-text">
+              This formulation matches your selected wellness goal (Immunity Support) and is available in your verified iKWATH pod.
+            </p>
+          </details>
+
+          <!-- Compact Preparation Timeline -->
+          <div class="prep-timeline-row">
+            <div class="timeline-step done">
+              <span class="step-icon">✓</span>
+              <span class="step-lbl">POD VERIFIED</span>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step done">
+              <span class="step-icon">✓</span>
+              <span class="step-lbl">INGREDIENTS CHECKED</span>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step active">
+              <span class="step-icon">⚡</span>
+              <span class="step-lbl">PREPARATION READY</span>
+            </div>
+            <div class="timeline-arrow">→</div>
+            <div class="timeline-step">
+              <span class="step-icon">💧</span>
+              <span class="step-lbl">DISPENSE</span>
+            </div>
+          </div>
+
+          <div class="prep-time-estimate-bar">
+            <span>Estimated preparation time: <strong>08:00</strong></span>
+          </div>
+
+          <!-- Primary Actions -->
+          <div class="ai-rec-actions-footer">
+            <button id="btn-start-prep" class="btn-primary-signin cta-large width-full">
+              <span class="btn-text">Start Preparation</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              <div class="btn-shimmer"></div>
+            </button>
+
+            <div class="secondary-actions-row">
+              <button id="btn-choose-another" class="btn-secondary-glass flex-1">
+                <span>Choose Another Recipe</span>
+              </button>
+
+              <button id="btn-ask-ai-quick" class="btn-secondary-glass flex-1 green-border">
+                <span>🎙️ Ask iKWATH</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div> <!-- End ai-rec-body -->
+
+    </div> <!-- End view-ai-recommend -->
+
+    <!-- ====================================================================
+         7. AUTOMATED KWATHA PREPARATION VIEW (View 7) — MAIN SHOWCASE
+         ==================================================================== -->
+    <div id="view-preparation" class="app-view">
+
+      <!-- Header -->
+      <header class="prep-view-header">
+        <button id="btn-prep-back" class="nav-back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <div class="scanner-header-title">
+          <h2 id="prep-header-title">Preparing Kwatha</h2>
+          <p id="prep-header-sub">Automated infusion in progress</p>
+        </div>
+
+        <button id="btn-prep-more" class="icon-btn" title="Options">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Connected Device Bar -->
+      <div class="connected-hardware-bar glass-card prep-hw-bar">
+        <div class="hardware-left">
+          <span class="pulse-dot green"></span>
+          <span class="hw-text">✓ <strong>iKWATH PRO CONNECTED</strong></span>
+        </div>
+        <div class="hardware-right">
+          <span class="hw-id">IKW-24A8-7392</span>
+        </div>
+      </div>
+
+      <!-- Main Preparation Body -->
+      <div class="prep-body">
+
+        <!-- Hero Section: Progress Ring + Recipe Info -->
+        <section class="prep-hero-section">
+
+          <!-- Large Circular Progress Ring -->
+          <div class="prep-progress-ring-wrapper">
+            <svg class="prep-ring-svg" viewBox="0 0 260 260">
+              <!-- Background Track -->
+              <circle class="ring-track" cx="130" cy="130" r="115" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+              <!-- Progress Arc -->
+              <circle class="ring-progress" id="ring-progress" cx="130" cy="130" r="115" fill="none"
+                stroke="url(#ring-gradient)" stroke-width="8" stroke-linecap="round"
+                stroke-dasharray="722.6" stroke-dashoffset="274.6"
+                transform="rotate(-90 130 130)"/>
+              <!-- Glow -->
+              <circle class="ring-glow" id="ring-glow" cx="130" cy="130" r="115" fill="none"
+                stroke="url(#ring-gradient)" stroke-width="16" stroke-linecap="round"
+                stroke-dasharray="722.6" stroke-dashoffset="274.6"
+                transform="rotate(-90 130 130)" opacity="0.2" filter="blur(8px)"/>
+              <defs>
+                <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#10b981"/>
+                  <stop offset="100%" stop-color="#d4af37"/>
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <!-- Center Content Inside Ring -->
+            <div class="ring-center-content">
+              <span class="ring-percent" id="ring-percent">62</span>
+              <span class="ring-percent-symbol">%</span>
+              <div class="ring-stage-label" id="ring-stage-label">EXTRACTION</div>
+            </div>
+
+            <!-- Pulsing Stage Indicator -->
+            <div class="ring-stage-pulse" id="ring-stage-pulse"></div>
+          </div>
+
+          <!-- Recipe Title & Time -->
+          <div class="prep-hero-info">
+            <span class="rec-category-badge green" id="prep-recipe-badge">AYURVEDIC DECOCTION</span>
+            <h1 class="prep-recipe-title" id="prep-recipe-title">IMMUNITY SUPPORT KWATHA</h1>
+            <p class="prep-recipe-sub" id="prep-recipe-sub">Tulsi • Ginger • Black Pepper</p>
+
+            <div class="prep-time-block">
+              <div class="time-remaining">
+                <span class="time-label">REMAINING</span>
+                <span class="time-value" id="prep-time-remaining">04:52</span>
+              </div>
+              <div class="time-divider-vert"></div>
+              <div class="time-detail-column">
+                <div class="time-row"><span class="time-sub-label">Started</span><span class="time-sub-value" id="prep-time-started">10:32 AM</span></div>
+                <div class="time-row"><span class="time-sub-label">Est. Completion</span><span class="time-sub-value gold" id="prep-time-est">10:37 AM</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6-Stage Process Timeline -->
+        <section class="prep-timeline-section glass-card">
+          <div class="card-section-title">
+            <h3>Preparation Timeline</h3>
+            <span class="realtime-tag" id="prep-realtime-tag">Live • 60Hz Sync</span>
+          </div>
+
+          <div class="prep-stages-timeline" id="prep-stages-timeline">
+            <div class="prep-stage done" data-stage="0">
+              <div class="stage-indicator"><span class="stage-check">✓</span></div>
+              <div class="stage-info"><strong>Pod Verified</strong><span>Authenticated</span></div>
+            </div>
+            <div class="prep-stage done" data-stage="1">
+              <div class="stage-indicator"><span class="stage-check">✓</span></div>
+              <div class="stage-info"><strong>Water Added</strong><span>150ml filled</span></div>
+            </div>
+            <div class="prep-stage done" data-stage="2">
+              <div class="stage-indicator"><span class="stage-check">✓</span></div>
+              <div class="stage-info"><strong>Heating</strong><span>Target 85°C reached</span></div>
+            </div>
+            <div class="prep-stage active" data-stage="3">
+              <div class="stage-indicator"><span class="stage-pulse-dot"></span></div>
+              <div class="stage-info"><strong>Extraction</strong><span id="stage-extraction-sub">Infusing botanicals...</span></div>
+            </div>
+            <div class="prep-stage" data-stage="4">
+              <div class="stage-indicator"><span class="stage-circle"></span></div>
+              <div class="stage-info"><strong>Reduction</strong><span>Concentrating kwatha</span></div>
+            </div>
+            <div class="prep-stage" data-stage="5">
+              <div class="stage-indicator"><span class="stage-circle"></span></div>
+              <div class="stage-info"><strong>Ready</strong><span>Dispense-ready</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Live Sensor Telemetry -->
+        <section class="prep-sensors-section glass-card">
+          <div class="card-section-title">
+            <h3>Live Machine Sensors</h3>
+            <span class="realtime-tag">Real-Time Telemetry</span>
+          </div>
+
+          <div class="sensor-grid">
+            <div class="sensor-item">
+              <div class="sensor-icon-box">🌡</div>
+              <div class="sensor-data">
+                <span class="sensor-label">Temperature</span>
+                <span class="sensor-value" id="sensor-temp">72°C</span>
+              </div>
+              <div class="sensor-bar-wrap"><div class="sensor-bar-fill green" id="sensor-temp-bar" style="width: 72%;"></div></div>
+            </div>
+
+            <div class="sensor-item">
+              <div class="sensor-icon-box">💧</div>
+              <div class="sensor-data">
+                <span class="sensor-label">Water Level</span>
+                <span class="sensor-value" id="sensor-water">68%</span>
+              </div>
+              <div class="sensor-bar-wrap"><div class="sensor-bar-fill blue" id="sensor-water-bar" style="width: 68%;"></div></div>
+            </div>
+
+            <div class="sensor-item">
+              <div class="sensor-icon-box">⚙️</div>
+              <div class="sensor-data">
+                <span class="sensor-label">Pressure</span>
+                <span class="sensor-value" id="sensor-pressure">Normal</span>
+              </div>
+              <div class="sensor-bar-wrap"><div class="sensor-bar-fill green" id="sensor-pressure-bar" style="width: 55%;"></div></div>
+            </div>
+
+            <div class="sensor-item">
+              <div class="sensor-icon-box">🔄</div>
+              <div class="sensor-data">
+                <span class="sensor-label">Flow</span>
+                <span class="sensor-value green" id="sensor-flow">Active</span>
+              </div>
+              <div class="sensor-bar-wrap"><div class="sensor-bar-fill gold" id="sensor-flow-bar" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="sensor-item sensor-wide">
+              <div class="sensor-icon-box">✓</div>
+              <div class="sensor-data">
+                <span class="sensor-label">Machine Status</span>
+                <span class="sensor-value green" id="sensor-machine-status">Optimal ✓</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Safety Monitor + AI Assistant Row -->
+        <section class="prep-safety-ai-row">
+          <!-- Safety Monitoring -->
+          <div class="safety-monitor-card glass-card">
+            <div class="safety-icon-wrap" id="safety-icon-wrap">
+              <span>🛡</span>
+            </div>
+            <div class="safety-text">
+              <strong id="safety-title">Safety Monitoring</strong>
+              <span id="safety-status">All systems normal</span>
+            </div>
+            <div class="safety-status-dot green" id="safety-dot"></div>
+          </div>
+
+          <!-- AI Assistant Bubble -->
+          <div class="ai-assistant-bubble glass-card" id="ai-assistant-bubble">
+            <div class="ai-bubble-avatar">
+              <span>🧠</span>
+              <div class="ai-bubble-pulse"></div>
+            </div>
+            <div class="ai-bubble-content">
+              <strong class="ai-bubble-title">iKWATH AI</strong>
+              <p class="ai-bubble-msg" id="ai-bubble-msg">Preparation is progressing normally.</p>
+            </div>
+            <button class="ai-bubble-detail-btn" id="btn-ai-prep-details">View Details</button>
+          </div>
+        </section>
+
+        <!-- Primary Actions (During Preparation) -->
+        <section class="prep-controls-footer" id="prep-controls-active">
+          <button id="btn-pause-prep" class="btn-secondary-glass cta-large width-full prep-pause-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="pause-icon">
+              <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+            </svg>
+            <span class="btn-text">Pause Preparation</span>
+          </button>
+
+          <button id="btn-cancel-prep" class="btn-ghost-danger">
+            <span>Cancel</span>
+          </button>
+        </section>
+
+        <!-- Completion State (Hidden until 100%) -->
+        <section class="prep-completion-section" id="prep-completion-section" style="display: none;">
+          <div class="completion-glow-ring">
+            <div class="completion-check-icon">✓</div>
+          </div>
+          <h1 class="completion-title">KWATHA READY</h1>
+          <p class="completion-subtitle">Your preparation is complete.</p>
+          <p class="completion-recipe-name" id="completion-recipe-name">Immunity Support Kwatha • 150ml</p>
+
+          <div class="completion-stats-row">
+            <div class="completion-stat">
+              <span class="stat-label">Duration</span>
+              <span class="stat-value" id="completion-duration">08:00</span>
+            </div>
+            <div class="completion-stat">
+              <span class="stat-label">Final Temp</span>
+              <span class="stat-value" id="completion-temp">72°C</span>
+            </div>
+            <div class="completion-stat">
+              <span class="stat-label">Quality</span>
+              <span class="stat-value green" id="completion-quality">Optimal ✓</span>
+            </div>
+          </div>
+
+          <button id="btn-dispense-now" class="btn-primary-signin cta-large width-full dispense-cta">
+            <span class="btn-text">Dispense Now</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            <div class="btn-shimmer"></div>
+          </button>
+
+          <button id="btn-prep-go-home" class="btn-secondary-glass width-full" style="margin-top: 0.5rem;">
+            <span>Return to Home</span>
+          </button>
+        </section>
+
+      </div>
+    </div>
+
+  </div> <!-- End app-container -->
+
+  <!-- CANCEL PREPARATION CONFIRMATION MODAL -->
+  <div id="modal-cancel-prep" class="modal-overlay">
+    <div class="modal-card glass-modal confirm-modal-card">
+      <div class="confirm-ring-pulse cancel-ring">✕</div>
+
+      <div class="modal-header text-center">
+        <span class="verified-badge amber-badge">⚠ CANCEL PREPARATION</span>
+        <h2>Are you sure?</h2>
+        <p class="cancel-warning-text">Cancelling will stop the current infusion process. The Smart Pod contents may be partially used.</p>
+      </div>
+
+      <div class="confirm-actions-row">
+        <button id="btn-confirm-cancel-prep" class="btn-danger-solid flex-1">
+          <span>Yes, Cancel</span>
+        </button>
+
+        <button id="btn-dismiss-cancel-modal" class="btn-secondary-glass flex-1">
+          <span>Continue Preparing</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREPARATION CONFIRMATION MODAL -->
+  <div id="modal-confirm-prep" class="modal-overlay">
+    <div class="modal-card glass-modal confirm-modal-card">
+      <div class="confirm-ring-pulse">⚡</div>
+      
+      <div class="modal-header text-center">
+        <span class="verified-badge">● PREPARATION CONFIRMATION</span>
+        <h2>Ready to prepare?</h2>
+        <h3 class="confirm-recipe-name" id="confirm-recipe-title">Immunity Support Kwatha</h3>
+      </div>
+
+      <div class="confirm-summary-box">
+        <div class="summary-row">
+          <span class="lbl">Smart Pod:</span>
+          <span class="val monospace gold">POD-IM-240829</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Connected Machine:</span>
+          <span class="val">iKWATH PRO (IKW-24A8-7392)</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Estimated Time:</span>
+          <span class="val green">08 Minutes</span>
+        </div>
+        <div class="summary-row">
+          <span class="lbl">Water Volume:</span>
+          <span class="val">150 ml</span>
+        </div>
+      </div>
+
+      <div class="confirm-actions-row">
+        <button id="btn-confirm-start-prep" class="btn-primary-signin flex-1">
+          <span>Start Preparing</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <button id="btn-cancel-confirm-prep" class="btn-secondary-glass flex-1">
+          <span>Cancel</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Device ID Input Modal -->
+  <div id="modal-manual-id" class="modal-overlay">
+    <div class="modal-card glass-modal">
+      <button class="modal-close" id="close-manual-modal">&times;</button>
+      <div class="modal-header">
+        <div class="qr-badge">MANUAL HARDWARE LOOKUP</div>
+        <h2>Enter Device ID</h2>
+        <p>Type the 12-character unique serial code printed on the machine label.</p>
+      </div>
+
+      <div class="form-group" style="margin: 1.2rem 0;">
+        <label for="manual-device-input" class="form-label">iKWATH Device ID Code</label>
+        <input type="text" id="manual-device-input" class="form-input" placeholder="e.g. IKW-24A8-7392" value="IKW-24A8-7392">
+      </div>
+
+      <button id="btn-submit-manual-id" class="btn-primary-signin">
+        <span>VERIFY DEVICE ID</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hardware Tech Specs Modal -->
+  <div id="modal-specs" class="modal-overlay">
+    <div class="modal-card glass-modal specs-modal">
+      <button class="modal-close" id="close-specs-modal">&times;</button>
+      <div class="modal-header">
+        <div class="tech-badge">iKWATH HARDWARE V4.2</div>
+        <h2>Autonomous Kwatha Extraction Specs</h2>
+        <p>Bringing ancient Charaka Samhita decoction science to connected IoT devices.</p>
+      </div>
+
+      <div class="specs-grid">
+        <div class="spec-box">
+          <div class="spec-icon">🔥</div>
+          <div class="spec-title">PID Precision Thermal</div>
+          <div class="spec-desc">Micro-steeping temperature control to extract active alkaloids without burning herbs.</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">🧪</div>
+          <div class="spec-title">Double Glass Chamber</div>
+          <div class="spec-desc">Borosilicate vacuum insulated extraction chamber with optical turbidity sensors.</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">💊</div>
+          <div class="spec-title">Smart NFC Pod Bay</div>
+          <div class="spec-desc">Hermetically sealed organic herb pods with encrypted dosage profiles.</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-icon">🧠</div>
+          <div class="spec-title">Prakriti AI Engine</div>
+          <div class="spec-desc">Personalized water-to-herb ratios adjusted based on Vata-Pitta-Kapha telemetry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       8. KWATHA DISPENSING VIEW (View 8) — DISPENSE CONTROL
+       ==================================================================== -->
+  <div id="view-dispensing" class="app-view">
+
+    <!-- Header -->
+    <header class="prep-view-header">
+      <button id="btn-dispense-back" class="nav-back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back</span>
+      </button>
+
+      <div class="scanner-header-title">
+        <h2>Dispense Kwatha</h2>
+        <p>Your preparation is ready</p>
+      </div>
+
+      <button id="btn-dispense-help" class="icon-btn" title="Help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Device Status Bar -->
+    <div class="connected-hardware-bar glass-card prep-hw-bar dispense-hw-bar">
+      <div class="hardware-left">
+        <span class="pulse-dot green"></span>
+        <span class="hw-text">✓ <strong>iKWATH PRO CONNECTED</strong></span>
+      </div>
+      <div class="hardware-right">
+        <span class="hw-device-label">Device:</span>
+        <span class="hw-id">IKW-24A8-7392</span>
+        <span class="hw-ready-badge">● READY TO DISPENSE</span>
+      </div>
+    </div>
+
+    <!-- Main Dispensing Body -->
+    <div class="dispense-body">
+
+      <!-- 3D Machine Visual Section -->
+      <section class="dispense-3d-section">
+        
+        <!-- Realistic 3D Machine Render -->
+        <div class="machine-3d-container" id="machine-3d-container">
+          <div class="machine-chassis">
+            <div class="machine-top-panel">
+              <div class="panel-light green"></div>
+              <div class="panel-indicator"></div>
+            </div>
+            
+            <div class="chamber-window">
+              <div class="kwatha-liquid" id="kwatha-liquid">
+                <div class="liquid-surface"></div>
+                <div class="liquid-particles"></div>
+              </div>
+              <div class="chamber-glow"></div>
+            </div>
+
+            <div class="dispense-nozzle">
+              <div class="nozzle-tip"></div>
+              <div class="liquid-stream" id="liquid-stream"></div>
+            </div>
+
+            <div class="machine-base">
+              <div class="base-platform"></div>
+            </div>
+          </div>
+
+          <!-- Glass/Cup Below Dispenser -->
+          <div class="collection-glass" id="collection-glass">
+            <div class="glass-body">
+              <div class="glass-reflection"></div>
+              <div class="dispensed-liquid" id="dispensed-liquid"></div>
+              <div class="liquid-ripple"></div>
+            </div>
+            <div class="glass-shadow"></div>
+          </div>
+
+          <!-- Botanical Particles -->
+          <div class="botanical-particle p1"></div>
+          <div class="botanical-particle p2"></div>
+          <div class="botanical-particle p3"></div>
+        </div>
+
+        <!-- Glass Detection Status & Interactive Simulator -->
+        <div class="glass-detection-row">
+          <div class="glass-detection-status" id="glass-status">
+            <svg class="check-icon" id="glass-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div class="status-info">
+              <div class="status-title" id="glass-status-title">✓ Glass Detected</div>
+              <div class="status-subtitle" id="glass-status-text">Cup positioned correctly</div>
+            </div>
+          </div>
+
+          <button id="btn-toggle-cup" class="utility-btn glass-btn sim-cup-btn">
+            <span id="toggle-cup-label">Simulate Cup Removal</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Two Column Layout: Summary + Control -->
+      <div class="dispense-control-grid">
+
+        <!-- Left: Preparation Summary -->
+        <section class="preparation-summary-card glass-card">
+          <div class="summary-header">
+            <span class="rec-category-badge green">AYURVEDIC DECOCTION</span>
+            <h3 class="recipe-name">IMMUNITY SUPPORT KWATHA</h3>
+          </div>
+
+          <div class="summary-details-grid">
+            <div class="summary-item">
+              <span class="item-label">Pod:</span>
+              <span class="item-value monospace gold">POD-IM-240829</span>
+            </div>
+            <div class="summary-item">
+              <span class="item-label">Preparation:</span>
+              <span class="item-value success">Completed ✓</span>
+            </div>
+            <div class="summary-item">
+              <span class="item-label">Quantity:</span>
+              <span class="item-value">1 serving (100 ml)</span>
+            </div>
+            <div class="summary-item">
+              <span class="item-label">Preparation Time:</span>
+              <span class="item-value">08:12</span>
+            </div>
+            <div class="summary-item">
+              <span class="item-label">Status:</span>
+              <span class="item-value ready" id="summary-dispense-status">Ready to dispense</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: Dispensing Control -->
+        <section class="dispense-control-card glass-card">
+          
+          <!-- Ready State -->
+          <div class="dispense-state dispense-ready active" id="dispense-state-ready">
+            <div class="state-icon-wrapper">
+              <svg class="state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            
+            <h3 class="state-title">Ready to Dispense</h3>
+            <p class="state-description" id="dispense-ready-hint">Place your cup below the dispenser.</p>
+
+            <button id="btn-start-dispense" class="btn-primary-signin btn-dispense-action cta-large">
+              <span class="btn-text">[ DISPENSE NOW ]</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+              </svg>
+              <div class="btn-shimmer"></div>
+            </button>
+
+            <p class="safety-notice">
+              <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              Please keep the cup in position until dispensing is complete.
+            </p>
+          </div>
+
+          <!-- Dispensing State -->
+          <div class="dispense-state dispense-active" id="dispense-state-active">
+            <div class="dispensing-animation">
+              <div class="liquid-drop-anim"></div>
+            </div>
+
+            <h3 class="state-title green" id="dispensing-live-title">DISPENSING...</h3>
+            
+            <!-- Progress Display -->
+            <div class="dispense-progress-display">
+              <div class="progress-label-row">
+                <span class="progress-label">Dispensed</span>
+                <span class="progress-values"><span id="dispensed-amount">68</span> ml / 100 ml</span>
+              </div>
+              
+              <!-- Circular Progress -->
+              <div class="circular-progress-wrapper">
+                <svg class="circular-progress-svg" viewBox="0 0 120 120">
+                  <circle class="progress-track" cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+                  <circle class="progress-arc" id="dispense-progress-arc" cx="60" cy="60" r="52" fill="none"
+                    stroke="url(#dispense-gradient)" stroke-width="6" stroke-linecap="round"
+                    stroke-dasharray="326.7" stroke-dashoffset="104.5"
+                    transform="rotate(-90 60 60)"/>
+                  <defs>
+                    <linearGradient id="dispense-gradient" x1="0%" y1="0%" x2="100%">
+                      <stop offset="0%" stop-color="#10b981"/>
+                      <stop offset="100%" stop-color="#d4af37"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="progress-center-text">
+                  <span class="progress-percent" id="dispense-percent">68%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Real-time Status Indicators -->
+            <div class="realtime-status-grid">
+              <div class="status-pill">
+                <span class="pill-icon">🌡️</span>
+                <div class="pill-info">
+                  <span class="pill-label">Temperature</span>
+                  <span class="pill-value warm">Warm</span>
+                </div>
+              </div>
+              <div class="status-pill">
+                <span class="pill-icon">💧</span>
+                <div class="pill-info">
+                  <span class="pill-label">Flow</span>
+                  <span class="pill-value green" id="dispense-flow-val">Active</span>
+                </div>
+              </div>
+              <div class="status-pill">
+                <span class="pill-icon">✓</span>
+                <div class="pill-info">
+                  <span class="pill-label">Glass</span>
+                  <span class="pill-value green" id="glass-status-pill">Detected ✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Completion State -->
+          <div class="dispense-state dispense-complete" id="dispense-state-complete">
+            <div class="completion-ring-pulse">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+
+            <span class="verified-badge green-badge">✓ COMPLETED</span>
+            <h3 class="state-title green">✓ KWATHA READY</h3>
+            <p class="state-description">“Kwatha prepared and dispensed successfully.”</p>
+
+            <div class="process-status-box">
+              <div class="process-status-label-row">
+                <span class="lbl">Process Status</span>
+                <span class="val green">100% Complete</span>
+              </div>
+              <div class="meter-bar-wrap">
+                <div class="meter-bar-fill green" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <!-- Completed Process Checklist -->
+            <div class="completion-checklist">
+              <div class="check-item"><span class="check-dot">✓</span><span>Machine Verified</span></div>
+              <div class="check-item"><span class="check-dot">✓</span><span>Pod Verified</span></div>
+              <div class="check-item"><span class="check-dot">✓</span><span>AI Recommendation</span></div>
+              <div class="check-item"><span class="check-dot">✓</span><span>Kwatha Prepared</span></div>
+              <div class="check-item"><span class="check-dot">✓</span><span>Kwatha Dispensed</span></div>
+              <div class="check-item"><span class="check-dot">✓</span><span>History Saved</span></div>
+            </div>
+
+            <div class="completion-details">
+              <div class="completion-row">
+                <span class="c-label">Quantity:</span>
+                <span class="c-value gold">100 ml</span>
+              </div>
+              <div class="completion-row">
+                <span class="c-label">Preparation:</span>
+                <span class="c-value">Immunity Support Kwatha</span>
+              </div>
+              <div class="completion-row">
+                <span class="c-label">Completed:</span>
+                <span class="c-value green" id="completion-time">10:37 AM</span>
+              </div>
+            </div>
+
+            <p class="compact-status-msg">“Your iKWATH preparation is complete and ready for your next wellness session.”</p>
+
+            <div class="completion-actions">
+              <button id="btn-dispense-done" class="btn-primary-signin cta-large width-full">
+                <span class="btn-text">[ Done ]</span>
+                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+                <div class="btn-shimmer"></div>
+              </button>
+
+              <button id="btn-view-prep-details" class="btn-secondary-glass width-full">
+                <span>[ View Preparation Details ]</span>
+              </button>
+            </div>
+
+            <!-- Optional Feedback -->
+            <div class="feedback-section">
+              <p class="feedback-prompt">How was your experience?</p>
+              <div class="star-rating" id="star-rating">
+                <button class="star-btn" data-rating="1">★</button>
+                <button class="star-btn" data-rating="2">★</button>
+                <button class="star-btn" data-rating="3">★</button>
+                <button class="star-btn" data-rating="4">★</button>
+                <button class="star-btn" data-rating="5">★</button>
+              </div>
+              <button id="btn-submit-feedback" class="btn-secondary-glass btn-sm-feedback" style="display: none; margin-top: 0.6rem;">
+                <span>[ Submit Feedback ]</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- Safety Monitoring Panel -->
+      <section class="safety-monitor-card glass-card" id="safety-monitor">
+        <div class="monitor-header">
+          <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span class="monitor-title">🛡 Safety Monitoring</span>
+        </div>
+        <div class="monitor-status">
+          <span class="status-indicator success" id="safety-status">All systems normal ✓</span>
+        </div>
+      </section>
+
+    </div> <!-- End dispense-body -->
+
+  </div> <!-- End view-dispensing -->
+
+  <!-- ====================================================================
+       9. FINAL SCREEN: iKWATH — WELLNESS HISTORY & AI INSIGHTS (View 9)
+       ==================================================================== -->
+  <div id="view-history" class="app-view">
+    
+    <!-- Top Header -->
+    <header class="dash-header history-header">
+      <div class="dash-brand">
+        <div class="brand-icon-wrapper">
+          <svg class="brand-leaf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 2C6.5 2 2 6.5 2 12c0 3.5 2 6.5 5 8 1.5-2.5 4-5 5-10 1 5 3.5 7.5 5 10 3-1.5 5-4.5 5-8 0-5.5-4.5-10-10-10z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">iKWATH</span>
+          <span class="brand-subtitle">Your Wellness Journey</span>
+        </div>
+      </div>
+
+      <div class="dash-header-right">
+        <div class="privacy-badge-pill">
+          <span>🔒 Private History</span>
+        </div>
+        <div class="avatar-circle" title="User Profile">
+          <span>AS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Subheader -->
+    <div class="history-subheader">
+      <p class="subheader-text">“Your preparations, patterns and insights — all in one place.”</p>
+    </div>
+
+    <div class="history-body">
+      
+      <!-- AI Insight Hero Card -->
+      <section class="ai-insight-hero-card glass-card">
+        <div class="ai-hero-header">
+          <span class="ai-sparkle-tag">✦ iKWATH AI INSIGHT</span>
+          <div class="ai-wave-mini"></div>
+        </div>
+
+        <h2 class="ai-hero-title">“You’ve completed 5 preparations this week.”</h2>
+        <p class="ai-hero-sub">“Your preparation routine has been consistent over the last 7 days.”</p>
+
+        <div class="ai-routine-indicator">
+          <span class="pulse-dot green"></span>
+          <span class="routine-status">Consistency Score: <strong>Optimal 92%</strong></span>
+        </div>
+      </section>
+
+      <!-- Key Statistics (3 Clean Stats) -->
+      <section class="key-stats-row">
+        <div class="key-stat-card glass-card">
+          <span class="stat-number">5</span>
+          <span class="stat-label">Preparations</span>
+        </div>
+
+        <div class="key-stat-card glass-card">
+          <span class="stat-number green">500 ml</span>
+          <span class="stat-label">Total Prepared</span>
+        </div>
+
+        <div class="key-stat-card glass-card">
+          <span class="stat-number gold">7</span>
+          <span class="stat-label">Day Journey</span>
+        </div>
+      </section>
+
+      <!-- Weekly Overview Section -->
+      <section class="weekly-overview-card glass-card">
+        <div class="overview-header">
+          <h3 class="overview-title">This Week</h3>
+          <span class="consistency-tag">5 / 7 days • Preparation consistency</span>
+        </div>
+
+        <div class="weekly-days-row">
+          <div class="day-col active">
+            <span class="day-dot green">●</span>
+            <span class="day-name">MON</span>
+          </div>
+          <div class="day-col active">
+            <span class="day-dot green">●</span>
+            <span class="day-name">TUE</span>
+          </div>
+          <div class="day-col">
+            <span class="day-dot slate">○</span>
+            <span class="day-name">WED</span>
+          </div>
+          <div class="day-col active">
+            <span class="day-dot green">●</span>
+            <span class="day-name">THU</span>
+          </div>
+          <div class="day-col active">
+            <span class="day-dot green">●</span>
+            <span class="day-name">FRI</span>
+          </div>
+          <div class="day-col active today">
+            <span class="day-dot gold">●</span>
+            <span class="day-name">SAT</span>
+          </div>
+          <div class="day-col">
+            <span class="day-dot slate">○</span>
+            <span class="day-name">SUN</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Preparation History Section -->
+      <section class="history-list-section">
+        <div class="section-header">
+          <h3 class="section-title">Recent Preparations</h3>
+          <span class="section-sub">Tap any item to view digital receipt</span>
+        </div>
+
+        <div class="history-log-list" id="history-log-list">
+          <div class="history-log-card glass-card highlighted clickable-prep-item" data-prep="immunity">
+            <div class="log-left">
+              <div class="log-icon green">🌿</div>
+              <div class="log-info">
+                <strong class="log-title">Immunity Support Kwatha</strong>
+                <span class="log-meta">Today • 10:37 AM • 100 ml</span>
+              </div>
+            </div>
+            <div class="log-right">
+              <span class="log-status-badge green">Completed ✓</span>
+            </div>
+          </div>
+
+          <div class="history-log-card glass-card clickable-prep-item" data-prep="digestive">
+            <div class="log-left">
+              <div class="log-icon amber">🫚</div>
+              <div class="log-info">
+                <strong class="log-title">Digestive Support Kwatha</strong>
+                <span class="log-meta">Yesterday • 01:15 PM • 100 ml</span>
+              </div>
+            </div>
+            <div class="log-right">
+              <span class="log-status-badge green">Completed ✓</span>
+            </div>
+          </div>
+
+          <div class="history-log-card glass-card clickable-prep-item" data-prep="relaxation">
+            <div class="log-left">
+              <div class="log-icon blue">✨</div>
+              <div class="log-info">
+                <strong class="log-title">Relaxation Kwatha</strong>
+                <span class="log-meta">30 Aug • 09:30 PM • 100 ml</span>
+              </div>
+            </div>
+            <div class="log-right">
+              <span class="log-status-badge green">Completed ✓</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Recommendation Card -->
+      <section class="ai-recommendation-card glass-card">
+        <div class="rec-header-row">
+          <span class="sparkle-icon">🧠</span>
+          <h3>Recommended Next</h3>
+        </div>
+        <p class="rec-card-msg">“Based on your recent preparation pattern, you may explore another formulation from your available verified pods.”</p>
+        <button id="btn-explore-rec" class="btn-primary-signin cta-large width-full">
+          <span class="btn-text">[ Explore Recommendations ]</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          <div class="btn-shimmer"></div>
+        </button>
+      </section>
+
+      <!-- Connected Machine Summary -->
+      <section class="machine-summary-card glass-card">
+        <div class="machine-summary-header">
+          <div class="summary-title-group">
+            <span class="machine-lbl">CONNECTED MACHINE</span>
+            <h4 class="machine-model-title">iKWATH PRO</h4>
+            <span class="machine-id-code monospace gold">Device ID: IKW-24A8-7392</span>
+          </div>
+          <span class="online-pill">● ONLINE</span>
+        </div>
+
+        <div class="machine-health-row">
+          <div class="health-col"><span class="lbl">Machine Health:</span><strong class="val green">Excellent ✓</strong></div>
+          <div class="health-col"><span class="lbl">Last Preparation:</span><strong class="val">Today, 10:37 AM</strong></div>
+        </div>
+
+        <button id="btn-view-machine-summary" class="btn-secondary-glass width-full">
+          <span>[ View Machine ]</span>
+        </button>
+      </section>
+
+    </div> <!-- End history-body -->
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-floating-nav">
+      <button class="nav-item" data-tab="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Home</span>
+      </button>
+
+      <button class="nav-item" data-tab="discover">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+        </svg>
+        <span>Discover</span>
+      </button>
+
+      <button class="nav-item nav-scan-hero" id="btn-floating-scan-history" title="Scan Machine">
+        <div class="scan-ring-pulse"></div>
+        <div class="scan-inner-circle">
+          <svg class="scan-qr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </div>
+        <span class="scan-nav-label">Scan</span>
+      </button>
+
+      <button class="nav-item active" data-tab="history">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>History</span>
+      </button>
+
+      <button class="nav-item" data-tab="profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- PREPARATION DETAIL BOTTOM SHEET MODAL -->
+  <div id="modal-bottom-sheet-prep" class="modal-overlay">
+    <div class="bottom-sheet-modal glass-modal">
+      <div class="sheet-handle"></div>
+      <button class="modal-close" id="close-sheet-modal">&times;</button>
+      
+      <div class="sheet-header text-center">
+        <div class="verified-badge">● DIGITAL PREPARATION RECEIPT</div>
+        <h2 id="sheet-recipe-title">Immunity Support Kwatha</h2>
+        <p class="sheet-recipe-sub">Standardized Ayurvedic Decoction Record</p>
+      </div>
+
+      <div class="sheet-receipt-box glass-card">
+        <div class="receipt-row"><span class="lbl">Date:</span><strong class="val" id="sheet-date">02 Sep 2026</strong></div>
+        <div class="receipt-row"><span class="lbl">Time:</span><strong class="val" id="sheet-time">10:37 AM</strong></div>
+        <div class="receipt-row"><span class="lbl">Quantity:</span><strong class="val gold" id="sheet-qty">100 ml</strong></div>
+        <div class="receipt-row"><span class="lbl">Pod:</span><strong class="val monospace gold" id="sheet-pod">POD-IM-240829</strong></div>
+        <div class="receipt-row"><span class="lbl">Machine:</span><strong class="val monospace" id="sheet-machine">IKW-24A8-7392</strong></div>
+        <div class="receipt-row"><span class="lbl">Preparation Status:</span><strong class="val green" id="sheet-status">Completed ✓</strong></div>
+      </div>
+
+      <div class="sheet-actions-row">
+        <button id="btn-close-sheet" class="btn-primary-signin width-full">
+          <span>Close Receipt</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Main JavaScript Bundle -->
+</body>
+</html>
